@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Malla Curricular Fonoaudiología</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background-color: #f9f9f9; }
+    table { border-collapse: collapse; width: 100%; background-color: white; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #008080; color: white; }
+    .materia { cursor: pointer; color: #0066cc; }
+    .info { display: none; background-color: #eef; padding: 10px; margin-top: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular de Fonoaudiología</h1>
+
+  <table>
+    <tr>
+      <th>Semestre</th>
+      <th>Asignaturas</th>
+    </tr>
+    <tr>
+      <td>1° Semestre</td>
+      <td>
+        <div class="materia" onclick="toggle('anatomia')">Anatomía Humana</div>
+        <div class="info" id="anatomia">
+          Créditos: 5<br/>
+          Objetivo: Estudiar el cuerpo humano desde una visión morfofuncional.<br/>
+          <a href="#">Ver syllabus</a>
+        </div>
+        <div class="materia" onclick="toggle('linguistica')">Lingüística General</div>
+        <div class="info" id="linguistica">
+          Créditos: 4<br/>
+          Objetivo: Introducción al estudio del lenguaje desde la perspectiva lingüística.<br/>
+          <a href="#">Ver syllabus</a>
+        </div>
+      </td>
+    </tr>
+    <!-- Puedes añadir más filas de semestres aquí -->
+  </table>
+
+  <script>
+    function toggle(id) {
+      var x = document.getElementById(id);
+      x.style.display = (x.style.display === "block") ? "none" : "block";
+    }
+  </script>
+</body>
+</html>
