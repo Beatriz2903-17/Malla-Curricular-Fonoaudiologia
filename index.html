@@ -1,47 +1,220 @@
-<tr><th>Semestre</th><th>Materias</th></tr>
-<tr>
-  <td style="background-color:#fce4ec; font-weight:bold;">1°</td>
-  <td>
-    <div class="materia" id="anatomia">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'anatomia')">
-        Anatomía y Fisiología General (12 créditos)
-      </label>
-    </div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malla Curricular Fonoaudiología</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    margin: 20px;
+    color: #333;
+  }
+  h1 {
+    text-align: center;
+    color: #4a4a4a;
+    margin-bottom: 30px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto 40px auto;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  }
+  th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  th {
+    background-color: #777;
+    color: white;
+    text-transform: uppercase;
+  }
+  tbody tr:nth-child(odd) {
+    background-color: #ffe6f0; /* rosa claro */
+  }
+  tbody tr:nth-child(even) {
+    background-color: #e6e0ff; /* lila claro */
+  }
+  tbody tr.disabled {
+    opacity: 0.5;
+  }
+  input[type="checkbox"] {
+    transform: scale(1.3);
+    cursor: pointer;
+  }
+  .contador {
+    max-width: 1000px;
+    margin: 20px auto 40px;
+    font-weight: 700;
+    font-size: 1.3em;
+    color: #333;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
 
-    <div class="materia" id="biogenetica">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'biogenetica')">
-        Biogenética (12 créditos)
-      </label>
-    </div>
+<h1>Malla Curricular Fonoaudiología</h1>
 
-    <div class="materia" id="contexto">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'contexto')">
-        Contexto Social y Salud Colectiva (3 créditos)
-      </label>
-    </div>
+<div class="contador">
+  Materias aprobadas: <span id="aprobadas">0</span> | Materias pendientes: <span id="pendientes">0</span>
+</div>
 
-    <div class="materia" id="fundamentos">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'fundamentos')">
-        Fundamentos Fonoaudiológicos (3 créditos)
-      </label>
-    </div>
+<table>
+  <thead>
+    <tr>
+      <th>Semestre</th>
+      <th>Materia</th>
+      <th>Prerrequisitos</th>
+      <th>Correquisitos</th>
+      <th>Aprobada</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- 1er semestre - rosado -->
+    <tr data-semestre="1" data-materia="FUNDAMENTOS FONOAUDIOLÓGICOS" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>FUNDAMENTOS FONOAUDIOLÓGICOS</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="1" data-materia="ANATOMÍA Y FISIOLOGÍA GENERAL" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="1" data-materia="PSICOLOGÍA DEL DESARROLLO" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>PSICOLOGÍA DEL DESARROLLO</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="1" data-materia="CONTEXTO SOCIAL Y SALUD COLECTIVA" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>CONTEXTO SOCIAL Y SALUD COLECTIVA</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="1" data-materia="LENGUAJE Y COMUNICOLOGÍA" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>LENGUAJE Y COMUNICOLOGÍA</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="1" data-materia="BIOGÉNICA" data-prerrequisitos="" data-correquisitos="">
+      <td>1</td>
+      <td>BIOGÉNICA</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
 
-    <div class="materia" id="lenguajecom">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'lenguajecom')">
-        Lenguaje y Comunicología (6 créditos)
-      </label>
-    </div>
+    <!-- 2do semestre - lila -->
+    <tr data-semestre="2" data-materia="ANATOMÍA DE CABEZA, CUELLO Y TÓRAX" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="">
+      <td>2</td>
+      <td>ANATOMÍA DE CABEZA, CUELLO Y TÓRAX</td>
+      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="PSICOPATOLOGÍA" data-prerrequisitos="PSICOLOGÍA DEL DESARROLLO" data-correquisitos="">
+      <td>2</td>
+      <td>PSICOPATOLOGÍA</td>
+      <td>PSICOLOGÍA DEL DESARROLLO</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="FÍSICA DE LA AUDICIÓN" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="">
+      <td>2</td>
+      <td>FÍSICA DE LA AUDICIÓN</td>
+      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="HERRAMIENTAS DE LA INVESTIGACIÓN" data-prerrequisitos="" data-correquisitos="">
+      <td>2</td>
+      <td>HERRAMIENTAS DE LA INVESTIGACIÓN</td>
+      <td>—</td>
+      <td>—</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="FONÉTICA Y FONOLOGÍA ESPAÑOLA" data-prerrequisitos="" data-correquisitos="LENGUAJE Y COGNICIÓN">
+      <td>2</td>
+      <td>FONÉTICA Y FONOLOGÍA ESPAÑOLA</td>
+      <td>—</td>
+      <td>LENGUAJE Y COGNICIÓN</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="CRECIMIENTO Y DESARROLLO" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="LENGUAJE Y COGNICIÓN">
+      <td>2</td>
+      <td>CRECIMIENTO Y DESARROLLO</td>
+      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
+      <td>LENGUAJE Y COGNICIÓN</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+    <tr data-semestre="2" data-materia="LENGUAJE Y COGNICIÓN" data-prerrequisitos="LENGUAJE Y COMUNICOLOGÍA" data-correquisitos="CRECIMIENTO Y DESARROLLO,FONÉTICA Y FONOLOGÍA ESPAÑOLA">
+      <td>2</td>
+      <td>LENGUAJE Y COGNICIÓN</td>
+      <td>LENGUAJE Y COMUNICOLOGÍA</td>
+      <td>CRECIMIENTO Y DESARROLLO, FONÉTICA Y FONOLOGÍA ESPAÑOLA</td>
+      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+    </tr>
+  </tbody>
+</table>
 
-    <div class="materia" id="psicodesarrollo">
-      <label class="checkbox-label">
-        <input type="checkbox" onchange="actualizarEstado(this, 'psicodesarrollo')">
-        Psicología del Desarrollo (9 créditos)
-      </label>
-    </div>
-  </td>
-</tr>
+<script>
+function actualizarEstadoMaterias() {
+  const filas = document.querySelectorAll('tbody tr');
+  const aprobadas = new Set();
+
+  // Primero, agregar materias marcadas
+  filas.forEach(fila => {
+    const checkbox = fila.querySelector('input[type="checkbox"]');
+    if (checkbox.checked) {
+      aprobadas.add(fila.dataset.materia);
+    }
+  });
+
+  filas.forEach(fila => {
+    const checkbox = fila.querySelector('input[type="checkbox"]');
+    const prerreqs = fila.dataset.prerrequisitos ? fila.dataset.prerrequisitos.split(',').map(s => s.trim()).filter(s => s.length > 0) : [];
+    // Correquisitos no bloquean, se permiten simultáneos
+    const prerreqsCumplidos = prerreqs.every(r => aprobadas.has(r));
+
+    if (prerreqsCumplidos) {
+      checkbox.disabled = false;
+      fila.classList.remove('disabled');
+    } else {
+      checkbox.disabled = true;
+      checkbox.checked = false;
+      fila.classList.add('disabled');
+    }
+  });
+
+  // Actualizar contadores
+  const totalMaterias = filas.length;
+  let aprobadasCount = 0;
+  filas.forEach(fila => {
+    if(fila.querySelector('input[type="checkbox"]').checked) aprobadasCount++;
+  });
+
+  document.getElementById('aprobadas').textContent = aprobadasCount;
+  document.getElementById('pendientes').textContent = totalMaterias - aprobadasCount;
+}
+
+// Ejecutar al cargar página
+window.onload = actualizarEstadoMaterias;
+</script>
+
+</body>
+</html>
