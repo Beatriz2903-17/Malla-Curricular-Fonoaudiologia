@@ -1,60 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Malla Curricular Fonoaudiología</title>
-<style>
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f7fa;
-    margin: 20px;
-    color: #333;
-  }
-  h1 {
-    text-align: center;
-    color: #4a4a4a;
-    margin-bottom: 30px;
-  }
-  table {
-    border-collapse: collapse;
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto 40px auto;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  }
-  th, td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  th {
-    background-color: #777;
-    color: white;
-    text-transform: uppercase;
-  }
-  tbody tr:nth-child(odd) {
-    background-color: #ffe6f0; /* rosa claro */
-  }
-  tbody tr:nth-child(even) {
-    background-color: #e6e0ff; /* lila claro */
-  }
-  tbody tr.disabled {
-    opacity: 0.5;
-  }
-  input[type="checkbox"] {
-    transform: scale(1.3);
-    cursor: pointer;
-  }
-  .contador {
-    max-width: 1000px;
-    margin: 20px auto 40px;
-    font-weight: 700;
-    font-size: 1.3em;
-    color: #333;
-    text-align: center;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malla Curricular Fonoaudiología</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8f8f8;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #444;
+    }
+    table {
+      width: 95%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #444;
+      color: white;
+    }
+    tbody tr:nth-child(odd) {
+      background-color: #ffe6f0; /* rosa */
+    }
+    tbody tr:nth-child(even) {
+      background-color: #e6e0ff; /* lila */
+    }
+    tbody tr.disabled {
+      opacity: 0.5;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.3);
+      cursor: pointer;
+    }
+    .contador {
+      text-align: center;
+      font-size: 1.2em;
+      margin: 20px auto;
+    }
+  </style>
 </head>
 <body>
 
@@ -74,145 +67,123 @@
       <th>Aprobada</th>
     </tr>
   </thead>
-  <tbody>
-    <!-- 1er semestre - rosado -->
-    <tr data-semestre="1" data-materia="FUNDAMENTOS FONOAUDIOLÓGICOS" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>FUNDAMENTOS FONOAUDIOLÓGICOS</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="1" data-materia="ANATOMÍA Y FISIOLOGÍA GENERAL" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="1" data-materia="PSICOLOGÍA DEL DESARROLLO" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>PSICOLOGÍA DEL DESARROLLO</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="1" data-materia="CONTEXTO SOCIAL Y SALUD COLECTIVA" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>CONTEXTO SOCIAL Y SALUD COLECTIVA</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="1" data-materia="LENGUAJE Y COMUNICOLOGÍA" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>LENGUAJE Y COMUNICOLOGÍA</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="1" data-materia="BIOGÉNICA" data-prerrequisitos="" data-correquisitos="">
-      <td>1</td>
-      <td>BIOGÉNICA</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-
-    <!-- 2do semestre - lila -->
-    <tr data-semestre="2" data-materia="ANATOMÍA DE CABEZA, CUELLO Y TÓRAX" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="">
-      <td>2</td>
-      <td>ANATOMÍA DE CABEZA, CUELLO Y TÓRAX</td>
-      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="PSICOPATOLOGÍA" data-prerrequisitos="PSICOLOGÍA DEL DESARROLLO" data-correquisitos="">
-      <td>2</td>
-      <td>PSICOPATOLOGÍA</td>
-      <td>PSICOLOGÍA DEL DESARROLLO</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="FÍSICA DE LA AUDICIÓN" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="">
-      <td>2</td>
-      <td>FÍSICA DE LA AUDICIÓN</td>
-      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="HERRAMIENTAS DE LA INVESTIGACIÓN" data-prerrequisitos="" data-correquisitos="">
-      <td>2</td>
-      <td>HERRAMIENTAS DE LA INVESTIGACIÓN</td>
-      <td>—</td>
-      <td>—</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="FONÉTICA Y FONOLOGÍA ESPAÑOLA" data-prerrequisitos="" data-correquisitos="LENGUAJE Y COGNICIÓN">
-      <td>2</td>
-      <td>FONÉTICA Y FONOLOGÍA ESPAÑOLA</td>
-      <td>—</td>
-      <td>LENGUAJE Y COGNICIÓN</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="CRECIMIENTO Y DESARROLLO" data-prerrequisitos="ANATOMÍA Y FISIOLOGÍA GENERAL" data-correquisitos="LENGUAJE Y COGNICIÓN">
-      <td>2</td>
-      <td>CRECIMIENTO Y DESARROLLO</td>
-      <td>ANATOMÍA Y FISIOLOGÍA GENERAL</td>
-      <td>LENGUAJE Y COGNICIÓN</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
-    <tr data-semestre="2" data-materia="LENGUAJE Y COGNICIÓN" data-prerrequisitos="LENGUAJE Y COMUNICOLOGÍA" data-correquisitos="CRECIMIENTO Y DESARROLLO,FONÉTICA Y FONOLOGÍA ESPAÑOLA">
-      <td>2</td>
-      <td>LENGUAJE Y COGNICIÓN</td>
-      <td>LENGUAJE Y COMUNICOLOGÍA</td>
-      <td>CRECIMIENTO Y DESARROLLO, FONÉTICA Y FONOLOGÍA ESPAÑOLA</td>
-      <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
-    </tr>
+  <tbody id="tabla-materias">
   </tbody>
 </table>
 
 <script>
-function actualizarEstadoMaterias() {
-  const filas = document.querySelectorAll('tbody tr');
-  const aprobadas = new Set();
+const materias = [
+  {sem: 1, nombre: "FUNDAMENTOS FONOAUDIOLÓGICOS"},
+  {sem: 1, nombre: "ANATOMÍA Y FISIOLOGÍA GENERAL"},
+  {sem: 1, nombre: "PSICOLOGÍA DEL DESARROLLO"},
+  {sem: 1, nombre: "CONTEXTO SOCIAL Y SALUD COLECTIVA"},
+  {sem: 1, nombre: "LENGUAJE Y COMUNICOLOGÍA"},
+  {sem: 1, nombre: "BIOGÉNICA"},
 
-  // Primero, agregar materias marcadas
+  {sem: 2, nombre: "ANATOMÍA DE CABEZA, CUELLO Y TÓRAX", pre: ["ANATOMÍA Y FISIOLOGÍA GENERAL"]},
+  {sem: 2, nombre: "PSICOPATOLOGÍA", pre: ["PSICOLOGÍA DEL DESARROLLO"]},
+  {sem: 2, nombre: "FÍSICA DE LA AUDICIÓN", pre: ["ANATOMÍA Y FISIOLOGÍA GENERAL"]},
+  {sem: 2, nombre: "HERRAMIENTAS DE LA INVESTIGACIÓN"},
+  {sem: 2, nombre: "FONÉTICA Y FONOLOGÍA ESPAÑOLA", cor: ["LENGUAJE Y COGNICIÓN"]},
+  {sem: 2, nombre: "CRECIMIENTO Y DESARROLLO", pre: ["ANATOMÍA Y FISIOLOGÍA GENERAL"], cor: ["LENGUAJE Y COGNICIÓN"]},
+  {sem: 2, nombre: "LENGUAJE Y COGNICIÓN", pre: ["LENGUAJE Y COMUNICOLOGÍA"], cor: ["CRECIMIENTO Y DESARROLLO", "FONÉTICA Y FONOLOGÍA ESPAÑOLA"]},
+
+  {sem: 3, nombre: "ALTO RIESGO INFANTIL", pre: ["CRECIMIENTO Y DESARROLLO"], cor: ["ANATOMÍA Y FISIOLOGÍA NEUROLÓGICA"]},
+  {sem: 3, nombre: "PSICOMOTRICIDAD", pre: ["CRECIMIENTO Y DESARROLLO"], cor: ["TÉCNICA DE ANÁLISIS Y MODIFICACIÓN DE LA CONDUCTA"]},
+  {sem: 3, nombre: "DIAGNOSTICO FONOAUDIOLÓGICO Y PROGRAMACIÓN TERAPÉUTICA", pre: ["LENGUAJE Y COGNICIÓN", "CRECIMIENTO Y DESARROLLO"]},
+  {sem: 3, nombre: "TÉCNICA DE ANÁLISIS Y MODIFICACIÓN DE LA CONDUCTA", pre: ["CRECIMIENTO Y DESARROLLO"], cor: ["PSICOMOTRICIDAD"]},
+  {sem: 3, nombre: "OTOLOGÍA", pre: ["ANATOMÍA DE CABEZA, CUELLO Y TÓRAX", "FÍSICA DE LA AUDICIÓN"]},
+  {sem: 3, nombre: "ANATOMÍA Y FISIOLOGÍA NEUROLÓGICA", pre: ["ANATOMÍA DE CABEZA, CUELLO Y TÓRAX"], cor: ["ALTO RIESGO INFANTIL"]},
+  {sem: 3, nombre: "BIOESTADÍSTICA", pre: ["HERRAMIENTAS DE LA INVESTIGACIÓN"]},
+
+  {sem: 4, nombre: "PRÁCTICA SERV. COMUNIDAD. EVALUACION FONOAUDIOLOGICA", pre: ["DIAGNOSTICO FONOAUDIOLÓGICO Y PROGRAMACIÓN TERAPÉUTICA"], cor: ["PATOLOGÍAS DEL HABLA, DEGLUCIÓN Y SU REHABILITACIÓN", "NEUROLOGÍA INFANTIL Y DEL ADULTO"]},
+  {sem: 4, nombre: "NEUROLOGÍA INFANTIL Y DEL ADULTO", pre: ["ANATOMÍA Y FISIOLOGÍA NEUROLÓGICA"], cor: ["PRÁCTICA SERV. COMUNIDAD. EVALUACION FONOAUDIOLOGICA"]},
+  {sem: 4, nombre: "PATOLOGÍAS DEL HABLA, DEGLUCIÓN Y SU REHABILITACIÓN", pre: ["DIAGNOSTICO FONOAUDIOLÓGICO Y PROGRAMACIÓN TERAPÉUTICA", "ANATOMÍA Y FISIOLOGÍA NEUROLÓGICA"], cor: ["PRÁCTICA SERV. COMUNIDAD. EVALUACION FONOAUDIOLOGICA"]},
+  {sem: 4, nombre: "AUDIOLOGÍA Y LABERINTOLOGÍA", pre: ["ALTO RIESGO INFANTIL", "OTOLOGÍA"]},
+  {sem: 4, nombre: "ODONTOESTOMATOLOGÍA"},
+  {sem: 4, nombre: "TERAPÉUTICA FONOAUDIOLÓGICA EN TRASTORNOS COGNITIVOS Y SENSORIALES", pre: ["ALTO RIESGO INFANTIL"]},
+  {sem: 4, nombre: "SALUD PÚBLICA I", pre: ["BIOESTADÍSTICA"]},
+
+  {sem: 5, nombre: "INTERVENCIÓN FONOAUDIOLÓGICA I", pre: ["PRÁCTICA SERV. COMUNIDAD. EVALUACION FONOAUDIOLOGICA"], cor: ["PATOLOGÍAS DEL LENGUAJE Y SU REHABILITACIÓN", "AUDIOLOGÍA Y LABERINTOLOGÍA PATOLOGICA", "EVALUACIÓN Y DIAGNÓSTICO DE LA VOZ"]},
+  {sem: 5, nombre: "PATOLOGÍAS DEL LENGUAJE Y SU REHABILITACIÓN", pre: ["NEUROLOGÍA INFANTIL Y DEL ADULTO", "PATOLOGÍAS DEL HABLA, DEGLUCIÓN Y SU REHABILITACIÓN"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA I"]},
+  {sem: 5, nombre: "AUDIOLOGÍA Y LABERINTOLOGÍA PATOLOGICA", pre: ["AUDIOLOGÍA Y LABERINTOLOGÍA", "NEUROLOGÍA INFANTIL Y DEL ADULTO"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA I"]},
+  {sem: 5, nombre: "TERAPÉUTICA FONOAUDIOLÓGICA EN TRASTORNOS NEUROMOTORES", pre: ["TERAPÉUTICA FONOAUDIOLÓGICA EN TRASTORNOS COGNITIVOS Y SENSORIALES", "NEUROLOGÍA INFANTIL Y DEL ADULTO"]},
+  {sem: 5, nombre: "EVALUACIÓN Y DIAGNÓSTICO DE LA VOZ", pre: ["NEUROLOGÍA INFANTIL Y DEL ADULTO", "PATOLOGÍAS DEL HABLA, DEGLUCIÓN Y SU REHABILITACIÓN"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA I"]},
+  {sem: 5, nombre: "GERIATRÍA Y GERONTOLOGÍA", pre: ["NEUROLOGÍA INFANTIL Y DEL ADULTO"]},
+  {sem: 5, nombre: "SALUD PÚBLICA II", pre: ["SALUD PÚBLICA I"]},
+
+  {sem: 6, nombre: "RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA I", pre: ["INTERVENCIÓN FONOAUDIOLÓGICA I"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA II"]},
+  {sem: 6, nombre: "TERAPÉUTICA FONOAUDIOLÓGICA EN MALFORMACIONES OROFACIALES", pre: ["EVALUACIÓN Y DIAGNÓSTICO DE LA VOZ"]},
+  {sem: 6, nombre: "METODOLOGÍA DE LA INVESTIGACIÓN I", pre: ["SALUD PÚBLICA II"]},
+  {sem: 6, nombre: "INTERVENCIÓN FONOAUDIOLÓGICA II", pre: ["INTERVENCIÓN FONOAUDIOLÓGICA I"], cor: ["TERAPIA Y REHABILITACIÓN DE LA VOZ", "AUDIOPRÓTESIS...", "RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA I"]},
+  {sem: 6, nombre: "TERAPIA Y REHABILITACIÓN DE LA VOZ", pre: ["EVALUACIÓN Y DIAGNÓSTICO DE LA VOZ"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA II"]},
+  {sem: 6, nombre: "AUDIOPRÓTESIS, SISTEMAS IMPLANTABLES E INTERVENCIÓN AUDITIVO VERBAL", pre: ["AUDIOLOGÍA Y LABERINTOLOGÍA PATOLOGICA"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA II"]},
+
+  {sem: 7, nombre: "ADMINISTRACIÓN FONOAUDIOLÓGICA"},
+  {sem: 7, nombre: "INTERVENCIÓN FONOAUDIOLÓGICA III", pre: ["INTERVENCIÓN FONOAUDIOLÓGICA II"], cor: ["RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA II", "ANÁLISIS ACÚSTICO DE LA VOZ"]},
+  {sem: 7, nombre: "ANÁLISIS ACÚSTICO DE LA VOZ", pre: ["TERAPIA Y REHABILITACIÓN DE LA VOZ"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA III"]},
+  {sem: 7, nombre: "METODOLOGÍA DE LA INVESTIGACIÓN II", pre: ["METODOLOGÍA DE LA INVESTIGACIÓN I"]},
+  {sem: 7, nombre: "TÉCNICAS DIDÁCTICAS EN FONOAUDIOLOGÍA"},
+  {sem: 7, nombre: "TRASTORNOS DEL APRENDIZAJE", pre: ["INTERVENCIÓN FONOAUDIOLÓGICA II"]},
+  {sem: 7, nombre: "RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA II", pre: ["RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA I"], cor: ["INTERVENCIÓN FONOAUDIOLÓGICA III"]},
+
+  {sem: 8, nombre: "DIAGNÓSTICO E INTERVENCIÓN FONOAUDIOLÓGICA EN NIÑOS Y ADULTOS", pre: ["RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA II", "INTERVENCIÓN FONOAUDIOLÓGICA III"], cor: ["ELABORACIÓN Y EJECUCIÓN TERAPÉUTICA"]},
+  {sem: 8, nombre: "ELABORACIÓN Y EJECUCIÓN TERAPÉUTICA FONOAUDIOLÓGICA", pre: ["RELACIÓN DE LA CLÍNICA CON LA TERAPÉUTICA FONOAUDIOLÓGICA II", "INTERVENCIÓN FONOAUDIOLÓGICA III"], cor: ["DIAGNÓSTICO E INTERVENCIÓN FONOAUDIOLÓGICA EN NIÑOS Y ADULTOS"]},
+  {sem: 8, nombre: "INTEGRACIÓN DE PROYECTO I", pre: ["METODOLOGÍA DE LA INVESTIGACIÓN II"]},
+
+  {sem: 9, nombre: "PROMOCIÓN Y PREVENCIÓN FONOAUDIOLÓGICA FAMILIAR Y COMUNITARIA", pre: ["DIAGNÓSTICO E INTERVENCIÓN FONOAUDIOLÓGICA EN NIÑOS Y ADULTOS"]},
+  {sem: 9, nombre: "PRÁCTICAS LABORALES EN CENTROS DE SALUD Y HOSPITALES II", pre: ["ELABORACIÓN Y EJECUCIÓN TERAPÉUTICA FONOAUDIOLÓGICA"]},
+  {sem: 9, nombre: "INTEGRACIÓN DE PROYECTO II", pre: ["INTEGRACIÓN DE PROYECTO I"]}
+];
+
+const tabla = document.getElementById("tabla-materias");
+
+materias.forEach(m => {
+  const tr = document.createElement("tr");
+  tr.dataset.materia = m.nombre;
+  tr.dataset.prerrequisitos = m.pre ? m.pre.join(",") : "";
+  tr.dataset.correquisitos = m.cor ? m.cor.join(",") : "";
+
+  tr.innerHTML = `
+    <td>${m.sem}</td>
+    <td>${m.nombre}</td>
+    <td>${m.pre ? m.pre.join(", ") : "—"}</td>
+    <td>${m.cor ? m.cor.join(", ") : "—"}</td>
+    <td><input type="checkbox" onchange="actualizarEstadoMaterias()"></td>
+  `;
+  tabla.appendChild(tr);
+});
+
+function actualizarEstadoMaterias() {
+  const filas = document.querySelectorAll("tbody tr");
+  const aprobadas = new Set();
   filas.forEach(fila => {
-    const checkbox = fila.querySelector('input[type="checkbox"]');
+    const checkbox = fila.querySelector("input[type='checkbox']");
     if (checkbox.checked) {
       aprobadas.add(fila.dataset.materia);
     }
   });
 
   filas.forEach(fila => {
-    const checkbox = fila.querySelector('input[type="checkbox"]');
-    const prerreqs = fila.dataset.prerrequisitos ? fila.dataset.prerrequisitos.split(',').map(s => s.trim()).filter(s => s.length > 0) : [];
-    // Correquisitos no bloquean, se permiten simultáneos
-    const prerreqsCumplidos = prerreqs.every(r => aprobadas.has(r));
-
-    if (prerreqsCumplidos) {
+    const checkbox = fila.querySelector("input[type='checkbox']");
+    const pre = fila.dataset.prerrequisitos ? fila.dataset.prerrequisitos.split(',').map(p => p.trim()) : [];
+    const preOk = pre.every(p => aprobadas.has(p));
+    if (preOk) {
       checkbox.disabled = false;
-      fila.classList.remove('disabled');
+      fila.classList.remove("disabled");
     } else {
       checkbox.disabled = true;
       checkbox.checked = false;
-      fila.classList.add('disabled');
+      fila.classList.add("disabled");
     }
   });
 
-  // Actualizar contadores
-  const totalMaterias = filas.length;
-  let aprobadasCount = 0;
-  filas.forEach(fila => {
-    if(fila.querySelector('input[type="checkbox"]').checked) aprobadasCount++;
-  });
-
-  document.getElementById('aprobadas').textContent = aprobadasCount;
-  document.getElementById('pendientes').textContent = totalMaterias - aprobadasCount;
+  const total = filas.length;
+  const done = Array.from(filas).filter(f => f.querySelector("input").checked).length;
+  document.getElementById("aprobadas").textContent = done;
+  document.getElementById("pendientes").textContent = total - done;
 }
 
-// Ejecutar al cargar página
 window.onload = actualizarEstadoMaterias;
 </script>
 
