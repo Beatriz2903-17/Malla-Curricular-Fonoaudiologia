@@ -1,161 +1,254 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Curricular Fonoaudiología</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff0f5;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-      color: #a64ca6;
-    }
-    .semestre {
-      margin-bottom: 40px;
-      border: 2px solid #e6ccff;
-      border-radius: 16px;
-      padding: 20px;
-      background-color: #faf0fa;
-    }
-    .semestre h2 {
-      color: #d63384;
-      border-bottom: 1px solid #e0b3ff;
-    }
-    .materias {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .materia {
-      background-color: #e0b3ff;
-      border-radius: 12px;
-      padding: 10px;
-      cursor: pointer;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-      color: white;
-      font-weight: 500;
-    }
-    .materia:hover {
-      transform: scale(1.05);
-      background-color: #cc99ff;
-    }
-    .previo {
-      background-color: #ffc2d1 !important;
-    }
-    .correquisito {
-      background-color: #ffdfba !important;
-    }
-    .prerequisito {
-      background-color: #bae1ff !important;
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Malla Curricular Fonoaudiología</title>
+<style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fff0f5;
+    margin: 0; padding: 20px;
+  }
+  h1 {
+    text-align: center;
+    color: #a64ca6;
+    margin-bottom: 40px;
+  }
+  .semestre {
+    border: 2px solid #e6ccff;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 40px;
+    background-color: #faf0fa;
+  }
+  .semestre h2 {
+    color: #d63384;
+    border-bottom: 2px solid #e0b3ff;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+  .materias {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    gap: 12px;
+  }
+  .materia {
+    background-color: #d8b3ff;
+    border-radius: 10px;
+    padding: 12px 15px;
+    cursor: pointer;
+    color: white;
+    font-weight: 600;
+    user-select: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  .materia:hover:not(.bloqueada) {
+    background-color: #bb99ff;
+    transform: scale(1.05);
+  }
+  .aprobada {
+    text-decoration: line-through;
+    opacity: 0.5;
+    background-color: #bfbfbf !important;
+    cursor: default;
+  }
+  .bloqueada {
+    background-color: #cccccc !important;
+    cursor: not-allowed;
+    color: #666666;
+  }
+  .info-contador {
+    margin-top: 10px;
+    font-weight: 600;
+    color: #7a3e7a;
+  }
+</style>
 </head>
 <body>
-  <h1>Malla Curricular Fonoaudiología</h1>
 
-  <div class="semestre">
-    <h2>1er Semestre</h2>
-    <div class="materias">
-      <div class="materia" id="fund_fono">Fundamentos Fonoaudiológicos</div>
-      <div class="materia" id="anat_gen">Anatomía y Fisiología General</div>
-      <div class="materia" id="psico_des">Psicología del Desarrollo</div>
-      <div class="materia" id="contexto_salud">Contexto Social y Salud Colectiva</div>
-      <div class="materia" id="lenguaje_com">Lenguaje y Comunicológica</div>
-      <div class="materia" id="biogenica">Biogénica</div>
-    </div>
-  </div>
+<h1>Malla Curricular Fonoaudiología</h1>
 
-  <div class="semestre">
-    <h2>2do Semestre</h2>
-    <div class="materias">
-      <div class="materia" id="anat_cabeza">Anatomía Cabeza, Cuello y Tórax</div>
-      <div class="materia" id="psicopato">Psicopatología</div>
-      <div class="materia" id="fisica_aud">Física de la Audición</div>
-      <div class="materia" id="investigacion">Herramientas de la Investigación</div>
-      <div class="materia" id="fonetica">Fonética y Fonología Española</div>
-      <div class="materia" id="crecimiento">Crecimiento y Desarrollo</div>
-      <div class="materia" id="lenguaje_cog">Lenguaje y Cognición</div>
-    </div>
-  </div>
+<div id="contenedor"></div>
 
-  <div class="semestre">
-    <h2>3er Semestre</h2>
-    <div class="materias">
-      <div class="materia" id="alto_riesgo">Alto Riesgo Infantil</div>
-      <div class="materia" id="psicomotricidad">Psicomotricidad</div>
-      <div class="materia" id="diag_prog">Diagnóstico Fonoaudiológico y Programación Terapéutica</div>
-      <div class="materia" id="modif_conducta">Técnicas de Análisis y Modificación de la Conducta</div>
-      <div class="materia" id="otologia">Otología</div>
-      <div class="materia" id="anat_neuro">Anatomía y Fisiología Neurológica</div>
-      <div class="materia" id="bioestadistica">Bioestadística</div>
-    </div>
-  </div>
+<script>
+// Malla con materias
+const SEMESTRES = {
+  1: ["Fundamentos Fonoaudiológicos", "Anatomía y Fisiología General", "Psicología del Desarrollo", "Contexto Social y Salud Colectiva", "Lenguaje y Comunicología", "Biogénica"],
+  2: ["Anatomía de Cabeza, Cuello y Tórax", "Psicopatología", "Física de la Audición", "Herramientas de la Investigación", "Fonética y Fonología Española", "Crecimiento y Desarrollo", "Lenguaje y Cognición"],
+  3: ["Alto Riesgo Infantil", "Psicomotricidad", "Diagnóstico Fonoaudiológico y Programación Terapéutica", "Técnicas de Análisis y Modificación de la Conducta", "Otología", "Anatomía y Fisiología Neurológica", "Bioestadística"],
+  4: ["Práctica: Evaluación Fonoaudiológica del Habla y Lenguaje en Población Infantil", "Neurología Infantil y del Adulto", "Patologías del Habla, Deglución y su Rehabilitación", "Audiología y Laberintología", "Odontoestomatología", "Terapéutica en Trastornos Cognitivos y Sensoriales", "Salud Pública I"],
+  5: ["Intervención Fonoaudiológica I", "Patologías del Lenguaje y su Rehabilitación", "Audiología y Laberintología Patológica", "Terapéutica en Trastornos Neuromotores", "Evaluación y Diagnóstico de la Voz", "Geriatría y Gerontología", "Salud Pública II"],
+  6: ["Relación de la Clínica con la Terapéutica Fonoaudiológica I", "Terapéutica Fonoaudiológica en Malformaciones Orofaciales", "Metodología de la Investigación I", "Intervención Fonoaudiológica II", "Terapia y Rehabilitación de la Voz", "Audioprótesis, Sistemas Implantables e Intervención Auditivo Verbal"],
+  7: ["Administración Fonoaudiológica", "Intervención Fonoaudiológica III", "Análisis Acústico de la Voz", "Metodología de la Investigación II", "Técnicas Didácticas en Fonoaudiología", "Trastornos del Aprendizaje", "Relación de la Clínica con la Terapéutica Fonoaudiológica II"],
+  8: ["Diagnóstico e Intervención Fonoaudiológica en Niños y Adultos", "Elaboración y Ejecución Terapéutica Fonoaudiológica", "Integración de Proyecto I"],
+  9: ["Promoción y Prevención Fonoaudiológica Familiar y Comunitaria", "Prácticas Laborales en Centros de Salud y Hospitales II", "Integración de Proyecto II"]
+};
 
-  <div class="semestre">
-    <h2>4to Semestre</h2>
-    <div class="materias">
-      <div class="materia" id="pract_eval">Práctica: Evaluación Fonoaudiológica del Habla y Lenguaje en Población Infantil</div>
-      <div class="materia" id="neuro_inf_adul">Neurología Infantil y del Adulto</div>
-      <div class="materia" id="pat_habla">Patologías del Habla, Deglución y su Rehabilitación</div>
-      <div class="materia" id="audiolab">Audiología y Laberintología</div>
-      <div class="materia" id="odonto">Odontoestomatología</div>
-      <div class="materia" id="terap_cog">Terapéutica en Trastornos Cognitivos y Sensoriales</div>
-      <div class="materia" id="salud_pub1">Salud Pública I</div>
-    </div>
-  </div>
+// Definimos prerrequisitos y correquisitos por materia (usamos IDs: 's{sem}_m{idx}')
+// Ejemplo: prerrequisitos: ["s1_m0","s2_m1"], correquisitos: ["s2_m2"]
+// Para simplificar, las materias tienen id 's{semestre}_m{materiaIndex}'
+// El índice empieza en 0 según orden en SEMESTRES[semestre]
+const REQUISITOS = {
+  "s2_m0": { prerrequisitos: ["s1_m1"], correquisitos: [] }, // Anatomía Cabeza, Cuello y Tórax -> Anatomía y Fisiología General
+  "s2_m1": { prerrequisitos: ["s1_m2"], correquisitos: [] }, // Psicopatología -> Psicología del Desarrollo
+  "s2_m2": { prerrequisitos: ["s1_m1"], correquisitos: [] }, // Física de la Audición -> Anatomía y Fisiología General
+  "s2_m4": { prerrequisitos: ["s2_m6"], correquisitos: ["s2_m5"] }, // Fonética y Fonología -> Lenguaje y Cognición y Crecimiento y Desarrollo (correquisito)
+  "s2_m5": { prerrequisitos: ["s1_m1"], correquisitos: ["s2_m4"] }, // Crecimiento y Desarrollo -> Anatomía y Fisiología General, correquisito Fonética
+  "s2_m6": { prerrequisitos: ["s1_m4"], correquisitos: ["s2_m5","s2_m4"] }, // Lenguaje y Cognición -> Lenguaje y Comunicología, correquisitos
+  "s3_m0": { prerrequisitos: ["s2_m5"], correquisitos: ["s3_m5"] }, // Alto Riesgo Infantil -> Crecimiento y Desarrollo, correquisito Anatomía y Fisiología Neurológica
+  "s3_m1": { prerrequisitos: ["s2_m5"], correquisitos: ["s3_m3"] }, // Psicomotricidad -> Crecimiento y Desarrollo, correquisito Técnicas de Análisis
+  "s3_m2": { prerrequisitos: ["s2_m6", "s2_m5"], correquisitos: [] }, // Diagnóstico -> Lenguaje y Cognición y Crecimiento y Desarrollo
+  "s3_m3": { prerrequisitos: ["s2_m5"], correquisitos: ["s3_m1"] }, // Técnicas de Análisis -> Crecimiento y Desarrollo, correquisito Psicomotricidad
+  "s3_m4": { prerrequisitos: ["s2_m0","s2_m2"], correquisitos: [] }, // Otología -> Anatomía Cabeza, Cuello y Tórax y Física de la Audición
+  "s3_m5": { prerrequisitos: ["s2_m0"], correquisitos: ["s3_m0"] }, // Anatomía y Fisiología Neurológica -> Anatomía Cabeza, Cuello y Tórax, correquisito Alto Riesgo Infantil
+  "s3_m6": { prerrequisitos: ["s2_m3"], correquisitos: [] }, // Bioestadística -> Herramientas de la Investigación
+  "s4_m0": { prerrequisitos: ["s3_m2"], correquisitos: ["s4_m1","s4_m2"] }, // Práctica -> Diagnóstico, correquisito Neurología Infantil y Patologías del Habla
+  "s4_m1": { prerrequisitos: ["s3_m5"], correquisitos: ["s4_m0"] }, // Neurología Infantil y Adulto -> Anatomía y Fisiología Neurológica, correquisito Práctica
+  "s4_m2": { prerrequisitos: ["s3_m2", "s3_m5"], correquisitos: ["s4_m0"] }, // Patologías del Habla -> Diagnóstico y Neurología, correquisito Práctica
+  "s4_m3": { prerrequisitos: ["s3_m0","s3_m4"], correquisitos: [] }, // Audiología y Laberintología -> Alto Riesgo Infantil y Otología
+  "s4_m5": { prerrequisitos: ["s3_m0"], correquisitos: [] }, // Terapéutica en Trastornos Cognitivos -> Alto Riesgo Infantil
+  "s4_m6": { prerrequisitos: ["s3_m6"], correquisitos: [] }, // Salud Pública I -> Bioestadística
+  "s5_m0": { prerrequisitos: ["s4_m0"], correquisitos: ["s5_m1","s5_m2","s5_m4"] }, // Intervención I -> Práctica, correquisitos Patologías Lenguaje, Audiología Patológica, Evaluación Voz
+  "s5_m1": { prerrequisitos: ["s4_m2","s4_m1"], correquisitos: ["s5_m0"] }, // Patologías Lenguaje -> Patologías Habla y Neurología, correquisito Intervención I
+  "s5_m2": { prerrequisitos: ["s4_m3","s4_m1"], correquisitos: ["s5_m0"] }, // Audiología Patológica -> Audiología y Neurología, correquisito Intervención I
+  "s5_m3": { prerrequisitos: ["s4_m5","s4_m1"], correquisitos: [] }, // Terapéutica Neuromotores -> Terapéutica Trastornos y Neurología
+  "s5_m4": { prerrequisitos: ["s4_m1","s4_m2"], correquisitos: ["s5_m0"] }, // Evaluación y Diagnóstico Voz -> Neurología y Patologías Habla, correquisito Intervención I
+  "s5_m5": { prerrequisitos: ["s4_m1"], correquisitos: [] }, // Geriatría y Gerontología -> Neurología Infantil y Adulto
+  "s5_m6": { prerrequisitos: ["s4_m6"], correquisitos: [] }, // Salud Pública II -> Salud Pública I
+  "s6_m0": { prerrequisitos: ["s5_m0"], correquisitos: ["s6_m3"] }, // Relación Clínica y Terapéutica I -> Intervención I, correquisito Intervención II
+  "s6_m1": { prerrequisitos: ["s5_m4"], correquisitos: [] }, // Terapéutica Malformaciones -> Evaluación y Diagnóstico Voz
+  "s6_m2": { prerrequisitos: ["s5_m6"], correquisitos: [] }, // Metodología Investigación I -> Salud Pública II
+  "s6_m3": { prerrequisitos: ["s5_m0"], correquisitos: ["s6_m4","s6_m0"] }, // Intervención II -> Intervención I, correquisitos Terapia Voz y Relación Clínica I
+  "s6_m4": { prerrequisitos: ["s5_m4"], correquisitos: ["s6_m3"] }, // Terapia y Rehabilitación de la Voz -> Evaluación y Diagnóstico Voz, correquisito Intervención II
+  "s6_m5": { prerrequisitos: ["s5_m2"], correquisitos: ["s6_m3"] }, // Audioprótesis, Sistemas Implantables -> Audiología Patológica, correquisito Intervención II
+  "s7_m1": { prerrequisitos: ["s6_m3"], correquisitos: ["s7_m6","s7_m2"] }, // Intervención III -> Intervención II, correquisitos Relación Clínica II, Análisis Acústico
+  "s7_m2": { prerrequisitos: ["s6_m4"], correquisitos: ["s7_m1"] }, // Análisis Acústico de la Voz -> Terapia Voz, correquisito Intervención III
+  "s7_m3": { prerrequisitos: ["s6_m2"], correquisitos: [] }, // Metodología Investigación II -> Metodología I
+  "s7_m5": { prerrequisitos: ["s6_m3"], correquisitos: [] }, // Trastornos del Aprendizaje -> Intervención II
+  "s7_m6": { prerrequisitos: ["s6_m0"], correquisitos: ["s7_m1"] }, // Relación Clínica II -> Relación Clínica I, correquisito Intervención III
+  "s8_m0": { prerrequisitos: ["s7_m6","s7_m1"], correquisitos: ["s8_m1"] }, // Diagnóstico e Intervención Niños y Adultos -> Relación Clínica II, Intervención III, correquisito Elaboración Terapéutica
+  "s8_m1": { prerrequisitos: ["s7_m6","s7_m1"], correquisitos: ["s8_m0"] }, // Elaboración y Ejecución Terapéutica -> Relación Clínica II, Intervención III, correquisito Diagnóstico e Intervención
+  "s8_m2": { prerrequisitos: ["s7_m3"], correquisitos: [] }, // Integración de Proyecto I -> Metodología II
+  "s9_m0": { prerrequisitos: ["s8_m0"], correquisitos: [] }, // Promoción y Prevención -> Diagnóstico e Intervención Niños y Adultos
+  "s9_m1": { prerrequisitos: ["s8_m1"], correquisitos: [] }, // Prácticas Laborales II -> Elaboración y Ejecución Terapéutica
+  "s9_m2": { prerrequisitos: ["s8_m2"], correquisitos: [] } // Integración Proyecto II -> Integración Proyecto I
+};
 
-  <script>
-    const PREREQUISITOS = {
-      anat_gen: ["anat_cabeza", "fisica_aud", "crecimiento"],
-      psico_des: ["psicopato"],
-      lenguaje_com: ["lenguaje_cog"],
-      crecimiento: ["alto_riesgo", "psicomotricidad", "diag_prog", "modif_conducta"],
-      lenguaje_cog: ["diag_prog"],
-      anat_cabeza: ["otologia", "anat_neuro"],
-      fisica_aud: ["otologia"],
-      investigacion: ["bioestadistica"],
-      anat_neuro: ["neuro_inf_adul", "pat_habla", "terap_cog"],
-      diag_prog: ["pract_eval", "pat_habla"],
-      alto_riesgo: ["audiolab", "terap_cog"],
-      otologia: ["audiolab"],
-      bioestadistica: ["salud_pub1"]
-    };
+const contenedor = document.getElementById('contenedor');
 
-    const CORREQUISITOS = {
-      lenguaje_cog: ["fonetica", "crecimiento"],
-      crecimiento: ["lenguaje_cog", "fonetica"],
-      fonetica: ["lenguaje_cog"],
-      alto_riesgo: ["anat_neuro"],
-      psicomotricidad: ["modif_conducta"],
-      modif_conducta: ["psicomotricidad"],
-      pract_eval: ["neuro_inf_adul", "pat_habla"],
-      neuro_inf_adul: ["pract_eval"],
-      pat_habla: ["pract_eval"]
-    };
+function crearMalla() {
+  contenedor.innerHTML = ''; // limpiar
+  
+  for (let sem in SEMESTRES) {
+    const divSem = document.createElement('div');
+    divSem.classList.add('semestre');
+    
+    const h2 = document.createElement('h2');
+    h2.textContent = `${sem}° Semestre`;
+    divSem.appendChild(h2);
 
-    document.querySelectorAll('.materia').forEach(el => {
-      el.addEventListener('click', () => {
-        document.querySelectorAll('.materia').forEach(m => m.classList.remove('previo','correquisito','prerequisito'));
-        const id = el.id;
-        Object.entries(PREREQUISITOS).forEach(([pre, dependientes]) => {
-          if (dependientes.includes(id)) {
-            document.getElementById(pre)?.classList.add('previo');
-          }
-        });
-        if (CORREQUISITOS[id]) {
-          CORREQUISITOS[id].forEach(co => document.getElementById(co)?.classList.add('correquisito'));
-        }
-        if (PREREQUISITOS[id]) {
-          PREREQUISITOS[id].forEach(dep => document.getElementById(dep)?.classList.add('prerequisito'));
-        }
-      });
+    const divMat = document.createElement('div');
+    divMat.classList.add('materias');
+
+    SEMESTRES[sem].forEach((mat, i) => {
+      const id = `s${sem}_m${i}`;
+      const div = document.createElement('div');
+      div.classList.add('materia');
+      div.id = id;
+      div.textContent = mat;
+      div.dataset.sem = sem;
+      div.dataset.idx = i;
+
+      divMat.appendChild(div);
     });
-  </script>
+
+    // contador
+    const contador = document.createElement('div');
+    contador.classList.add('info-contador');
+    contador.id = `contador_sem_${sem}`;
+    divSem.appendChild(divMat);
+    divSem.appendChild(contador);
+    
+    contenedor.appendChild(divSem);
+  }
+}
+
+let aprobadas = new Set();
+
+// Verificar si todos los prerrequisitos y correquisitos están aprobados
+function requisitosCumplidos(id) {
+  if (!(id in REQUISITOS)) return true; // Sin requisitos
+  
+  const { prerrequisitos, correquisitos } = REQUISITOS[id];
+  
+  // Verificar prerrequisitos
+  for (const pre of prerrequisitos) {
+    if (!aprobadas.has(pre)) return false;
+  }
+  
+  // Verificar correquisitos
+  for (const co of correquisitos) {
+    if (!aprobadas.has(co)) return false;
+  }
+  
+  return true;
+}
+
+// Actualizar clases y bloqueos
+function actualizarEstado() {
+  document.querySelectorAll('.materia').forEach(div => {
+    if (aprobadas.has(div.id)) {
+      div.classList.add('aprobada');
+      div.classList.remove('bloqueada');
+      div.style.pointerEvents = 'auto';
+    } else {
+      if (requisitosCumplidos(div.id)) {
+        div.classList.remove('bloqueada');
+        div.style.pointerEvents = 'auto';
+      } else {
+        div.classList.add('bloqueada');
+        div.style.pointerEvents = 'none';
+      }
+      div.classList.remove('aprobada');
+    }
+  });
+
+  // Actualizar contadores por semestre
+  for (let sem in SEMESTRES) {
+    let disponibles = 0;
+    SEMESTRES[sem].forEach((_, i) => {
+      const id = `s${sem}_m${i}`;
+      if (!aprobadas.has(id) && !document.getElementById(id).classList.contains('bloqueada')) {
+        disponibles++;
+      }
+    });
+    const contador = document.getElementById(`contador_sem_${sem}`);
+    contador.textContent = `Materias disponibles para tomar: ${disponibles}`;
+  }
+}
+
+function toggleAprobada(div) {
+  if (div.classList.contains('bloqueada')) return; // no hacer nada
+  
+  if (aprobadas.has(div.id)) {
+    aprobadas.delete(div.id);
+  } else {
+    aprobadas.add(div.id);
+  }
+  actualizarEstado();
+}
+
+// Crear malla y eventos
+crearMalla();
+actualizarEstado();
+
+contenedor.addEventListener('click', e => {
+  if (e.target.classList.contains('materia')) {
+    toggleAprobada(e.target);
+  }
+});
+</script>
+
 </body>
 </html>
