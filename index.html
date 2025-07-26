@@ -7,45 +7,75 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: #fff0f5;
+      background: #fef6ff;
       margin: 0;
       padding: 2rem;
     }
-    h2 {
-      color: #800080;
+    h1 {
+      text-align: center;
+      color: #a64ca6;
+      margin-bottom: 2rem;
     }
     .semestre {
-      background: #ffe6f0;
+      background: #f7e6ff;
       padding: 1rem;
       border-radius: 1rem;
       margin-bottom: 2rem;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .semestre h2 {
+      color: #6a1b9a;
+      border-bottom: 2px solid #ce93d8;
+      margin-bottom: 1rem;
     }
     .materia {
-      background: #d8bfd8;
+      background: linear-gradient(135deg, #e1bee7, #f8bbd0);
       margin: 0.5rem 0;
-      padding: 0.6rem 1rem;
+      padding: 0.75rem 1rem;
       border-radius: 0.8rem;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.2s ease-in-out;
+      position: relative;
     }
     .materia:hover {
-      background: #dda0dd;
+      transform: scale(1.02);
     }
-    .bloqueada {
-      background: #e4d1e4;
-      color: #777;
-      cursor: not-allowed;
+    .materia.aprobada {
       text-decoration: line-through;
-    }
-    .aprobada {
-      text-decoration: line-through;
-      background: #c0c0c0;
+      background: #b3e5fc;
       color: #333;
+      opacity: 0.6;
+    }
+    .materia.bloqueada {
+      background: #f0f0f0;
+      color: #aaa;
+      text-decoration: line-through;
+      cursor: not-allowed;
+    }
+    .tooltip {
+      visibility: hidden;
+      background-color: #616161;
+      color: #fff;
+      text-align: center;
+      padding: 5px;
+      border-radius: 6px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.75rem;
+    }
+    .materia:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
     }
     .contador {
       font-weight: bold;
       margin-top: 1rem;
+      color: #7b1fa2;
     }
   </style>
 </head>
@@ -55,77 +85,78 @@
 
   <script>
     const materias = [
-      // Semestre 1
-      { codigo: 's1_m1', nombre: 'Fundamentos Fonoaudiológicos', semestre: 1 },
-      { codigo: 's1_m2', nombre: 'Anatomía y Fisiología General', semestre: 1 },
-      { codigo: 's1_m3', nombre: 'Psicología del Desarrollo', semestre: 1 },
-      { codigo: 's1_m4', nombre: 'Contexto Social y Salud Colectiva', semestre: 1 },
-      { codigo: 's1_m5', nombre: 'Lenguaje y Comunicología', semestre: 1 },
-      { codigo: 's1_m6', nombre: 'Biogénica', semestre: 1 },
+  { codigo: 'ing_b1', nombre: 'Suficiencia en Inglés B1 (Requisito)', semestre: 0 },
+  // Semestre 1
+  { codigo: 's1_m1', nombre: 'Fundamentos Fonoaudiológicos', semestre: 1 },
+  { codigo: 's1_m2', nombre: 'Anatomía y Fisiología General', semestre: 1 },
+  { codigo: 's1_m3', nombre: 'Psicología del Desarrollo', semestre: 1 },
+  { codigo: 's1_m4', nombre: 'Contexto Social y Salud Colectiva', semestre: 1 },
+  { codigo: 's1_m5', nombre: 'Lenguaje y Comunicología', semestre: 1 },
+  { codigo: 's1_m6', nombre: 'Biogénica', semestre: 1 },
 
-      // Semestre 2
-      { codigo: 's2_m1', nombre: 'Anatomía de Cabeza, Cuello y Tórax', semestre: 2, prerequisitos: ['s1_m2'] },
-      { codigo: 's2_m2', nombre: 'Psicopatología', semestre: 2, prerequisitos: ['s1_m3'] },
-      { codigo: 's2_m3', nombre: 'Física de la Audición', semestre: 2, prerequisitos: ['s1_m2'] },
-      { codigo: 's2_m4', nombre: 'Herramientas de la Investigación', semestre: 2 },
-      { codigo: 's2_m5', nombre: 'Fonética y Fonología Española', semestre: 2, prerequisitos: ['s2_m7'] },
-      { codigo: 's2_m6', nombre: 'Crecimiento y Desarrollo', semestre: 2, prerequisitos: ['s1_m2'], correquisitos: ['s2_m7'] },
-      { codigo: 's2_m7', nombre: 'Lenguaje y Cognición', semestre: 2, prerequisitos: ['s1_m5'], correquisitos: ['s2_m5', 's2_m6'] },
+  // Semestre 2
+  { codigo: 's2_m1', nombre: 'Anatomía de Cabeza, Cuello y Tórax', semestre: 2, prerequisitos: ['s1_m2'] },
+  { codigo: 's2_m2', nombre: 'Psicopatología', semestre: 2, prerequisitos: ['s1_m3'] },
+  { codigo: 's2_m3', nombre: 'Física de la Audición', semestre: 2, prerequisitos: ['s1_m2'] },
+  { codigo: 's2_m4', nombre: 'Herramientas de la Investigación', semestre: 2 },
+  { codigo: 's2_m5', nombre: 'Fonética y Fonología Española', semestre: 2, correquisitos: ['s2_m7'] },
+  { codigo: 's2_m6', nombre: 'Crecimiento y Desarrollo', semestre: 2, prerequisitos: ['s1_m2'], correquisitos: ['s2_m7'] },
+  { codigo: 's2_m7', nombre: 'Lenguaje y Cognición', semestre: 2, prerequisitos: ['s1_m5'], correquisitos: ['s2_m5', 's2_m6'] },
 
-      // Semestre 3
-      { codigo: 's3_m1', nombre: 'Alto Riesgo Infantil', semestre: 3, prerequisitos: ['s2_m6', 's3_m6'] },
-      { codigo: 's3_m2', nombre: 'Psicomotricidad', semestre: 3, prerequisitos: ['s2_m6'], correquisitos: ['s3_m4'] },
-      { codigo: 's3_m3', nombre: 'Diagnóstico Fonoaudiológico y Programación Terapéutica', semestre: 3, prerequisitos: ['s2_m6', 's2_m7'] },
-      { codigo: 's3_m4', nombre: 'Técnica de Análisis y Modificación de la Conducta', semestre: 3, prerequisitos: ['s2_m6'], correquisitos: ['s3_m2'] },
-      { codigo: 's3_m5', nombre: 'Otología', semestre: 3, prerequisitos: ['s2_m1', 's2_m3'] },
-      { codigo: 's3_m6', nombre: 'Anatomía y Fisiología Neurológica', semestre: 3, prerequisitos: ['s2_m1'], correquisitos: ['s3_m1'] },
-      { codigo: 's3_m7', nombre: 'Bioestadística', semestre: 3, prerequisitos: ['s2_m4'] },
+  // Semestre 3
+  { codigo: 's3_m1', nombre: 'Alto Riesgo Infantil', semestre: 3, prerequisitos: ['s2_m6'], correquisitos: ['s3_m6'] },
+  { codigo: 's3_m2', nombre: 'Psicomotricidad', semestre: 3, prerequisitos: ['s2_m6'], correquisitos: ['s3_m4'] },
+  { codigo: 's3_m3', nombre: 'Diagnóstico Fonoaudiológico y Programación Terapéutica', semestre: 3, prerequisitos: ['s2_m7', 's2_m6'] },
+  { codigo: 's3_m4', nombre: 'Técnica de Análisis y Modificación de la Conducta', semestre: 3, prerequisitos: ['s2_m6'], correquisitos: ['s3_m2'] },
+  { codigo: 's3_m5', nombre: 'Otología', semestre: 3, prerequisitos: ['s2_m1', 's2_m3'] },
+  { codigo: 's3_m6', nombre: 'Anatomía y Fisiología Neurológica', semestre: 3, prerequisitos: ['s2_m1'], correquisitos: ['s3_m1'] },
+  { codigo: 's3_m7', nombre: 'Bioestadística', semestre: 3, prerequisitos: ['s2_m4'] },
 
-      // Semestre 4
-      { codigo: 's4_m1', nombre: 'Práctica. Evaluación Fonoaudiológica Infantil', semestre: 4, prerequisitos: ['s3_m3'], correquisitos: ['s4_m2', 's4_m3'] },
-      { codigo: 's4_m2', nombre: 'Neurología Infantil y del Adulto', semestre: 4, prerequisitos: ['s3_m6'], correquisitos: ['s4_m1'] },
-      { codigo: 's4_m3', nombre: 'Patologías del Habla, Deglución y Rehabilitación', semestre: 4, prerequisitos: ['s3_m3', 's3_m6'], correquisitos: ['s4_m1'] },
-      { codigo: 's4_m4', nombre: 'Audiología y Laberinología', semestre: 4, prerequisitos: ['s3_m1', 's3_m5'] },
-      { codigo: 's4_m5', nombre: 'Odontoestomatología', semestre: 4 },
-      { codigo: 's4_m6', nombre: 'Terapéutica Fonoaudiológica en Trastornos Cognitivos y Sensoriales', semestre: 4, prerequisitos: ['s3_m1'] },
-      { codigo: 's4_m7', nombre: 'Salud Pública I', semestre: 4, prerequisitos: ['s3_m7'] },
+  // Semestre 4
+  { codigo: 's4_m1', nombre: 'Práctica. Evaluación Fonoaudiológica Infantil', semestre: 4, prerequisitos: ['s3_m3'], correquisitos: ['s4_m2', 's4_m3'] },
+  { codigo: 's4_m2', nombre: 'Neurología Infantil y del Adulto', semestre: 4, prerequisitos: ['s3_m6'], correquisitos: ['s4_m1'] },
+  { codigo: 's4_m3', nombre: 'Patologías del Habla, Deglución y Rehabilitación', semestre: 4, prerequisitos: ['s3_m3', 's3_m6'], correquisitos: ['s4_m1'] },
+  { codigo: 's4_m4', nombre: 'Audiología y Laberinología', semestre: 4, prerequisitos: ['s3_m1', 's3_m5'] },
+  { codigo: 's4_m5', nombre: 'Odontoestomatología', semestre: 4 },
+  { codigo: 's4_m6', nombre: 'Terapéutica Fonoaudiológica en Trastornos Cognitivos y Sensoriales', semestre: 4, prerequisitos: ['s3_m1'] },
+  { codigo: 's4_m7', nombre: 'Salud Pública I', semestre: 4, prerequisitos: ['s3_m7'] },
 
-      // Semestre 5
-      { codigo: 's5_m1', nombre: 'Intervención Fonoaudiológica I', semestre: 5, prerequisitos: ['s4_m1'], correquisitos: ['s5_m2', 's5_m3', 's5_m5'] },
-      { codigo: 's5_m2', nombre: 'Patologías del Lenguaje y su Rehabilitación', semestre: 5, prerequisitos: ['s4_m2', 's4_m3'], correquisitos: ['s5_m1'] },
-      { codigo: 's5_m3', nombre: 'Audiología Patológica e Intervención', semestre: 5, prerequisitos: ['s4_m4', 's4_m2'], correquisitos: ['s5_m1'] },
-      { codigo: 's5_m4', nombre: 'Terapéutica en Trastornos Neuromotores', semestre: 5, prerequisitos: ['s4_m6', 's4_m2'] },
-      { codigo: 's5_m5', nombre: 'Evaluación y Diagnóstico de la Voz', semestre: 5, prerequisitos: ['s4_m2', 's4_m3'], correquisitos: ['s5_m1'] },
-      { codigo: 's5_m6', nombre: 'Geriatría y Gerontología', semestre: 5, prerequisitos: ['s4_m2'] },
-      { codigo: 's5_m7', nombre: 'Salud Pública II', semestre: 5, prerequisitos: ['s4_m7'] },
+  // Semestre 5
+  { codigo: 's5_m1', nombre: 'Intervención Fonoaudiológica I', semestre: 5, prerequisitos: ['s4_m1'], correquisitos: ['s5_m2', 's5_m3', 's5_m5'] },
+  { codigo: 's5_m2', nombre: 'Patologías del Lenguaje y su Rehabilitación', semestre: 5, prerequisitos: ['s4_m2', 's4_m3'], correquisitos: ['s5_m1'] },
+  { codigo: 's5_m3', nombre: 'Audiología y Laberinología Patológica', semestre: 5, prerequisitos: ['s4_m4', 's4_m2'], correquisitos: ['s5_m1'] },
+  { codigo: 's5_m4', nombre: 'Terapéutica en Trastornos Neuromotores', semestre: 5, prerequisitos: ['s4_m6', 's4_m2'] },
+  { codigo: 's5_m5', nombre: 'Evaluación y Diagnóstico de la Voz', semestre: 5, prerequisitos: ['s4_m2', 's4_m3'], correquisitos: ['s5_m1'] },
+  { codigo: 's5_m6', nombre: 'Geriatría y Gerontología', semestre: 5, prerequisitos: ['s4_m2'] },
+  { codigo: 's5_m7', nombre: 'Salud Pública II', semestre: 5, prerequisitos: ['s4_m7'] },
 
-      // Semestre 6
-      { codigo: 's6_m1', nombre: 'Relación Clínica y Terapéutica I', semestre: 6, prerequisitos: ['s5_m1'], correquisitos: ['s6_m4'] },
-      { codigo: 's6_m2', nombre: 'Terapéutica en Malformaciones Orofaciales', semestre: 6, prerequisitos: ['s5_m5'] },
-      { codigo: 's6_m3', nombre: 'Metodología de la Investigación I', semestre: 6, prerequisitos: ['s5_m7'] },
-      { codigo: 's6_m4', nombre: 'Intervención Fonoaudiológica II', semestre: 6, prerequisitos: ['s5_m1'], correquisitos: ['s6_m1', 's6_m5', 's6_m6'] },
-      { codigo: 's6_m5', nombre: 'Terapia y Rehabilitación de la Voz', semestre: 6, prerequisitos: ['s5_m5'], correquisitos: ['s6_m4'] },
-      { codigo: 's6_m6', nombre: 'Audioprótesis e Intervención Auditiva', semestre: 6, prerequisitos: ['s5_m3'], correquisitos: ['s6_m4'] },
+  // Semestre 6
+  { codigo: 's6_m1', nombre: 'Relación Clínica y Terapéutica I', semestre: 6, prerequisitos: ['s5_m1'], correquisitos: ['s6_m4'] },
+  { codigo: 's6_m2', nombre: 'Terapéutica en Malformaciones Orofaciales', semestre: 6, prerequisitos: ['s5_m5'] },
+  { codigo: 's6_m3', nombre: 'Metodología de la Investigación I', semestre: 6, prerequisitos: ['s5_m7'] },
+  { codigo: 's6_m4', nombre: 'Intervención Fonoaudiológica II', semestre: 6, prerequisitos: ['s5_m1'], correquisitos: ['s6_m1', 's6_m5', 's6_m6'] },
+  { codigo: 's6_m5', nombre: 'Terapia y Rehabilitación de la Voz', semestre: 6, prerequisitos: ['s5_m5'], correquisitos: ['s6_m4'] },
+  { codigo: 's6_m6', nombre: 'Audioprótesis e Intervención Auditiva', semestre: 6, prerequisitos: ['s5_m3'], correquisitos: ['s6_m4'] },
 
-      // Semestre 7
-      { codigo: 's7_m1', nombre: 'Administración Fonoaudiológica', semestre: 7 },
-      { codigo: 's7_m2', nombre: 'Intervención Fonoaudiológica III', semestre: 7, prerequisitos: ['s6_m4'], correquisitos: ['s7_m3', 's7_m7'] },
-      { codigo: 's7_m3', nombre: 'Análisis Acústico de la Voz', semestre: 7, prerequisitos: ['s6_m5'], correquisitos: ['s7_m2'] },
-      { codigo: 's7_m4', nombre: 'Metodología de la Investigación II', semestre: 7, prerequisitos: ['s6_m3'] },
-      { codigo: 's7_m5', nombre: 'Técnicas Didácticas en Fonoaudiología', semestre: 7 },
-      { codigo: 's7_m6', nombre: 'Trastornos del Aprendizaje', semestre: 7, prerequisitos: ['s6_m4'] },
-      { codigo: 's7_m7', nombre: 'Relación Clínica y Terapéutica II', semestre: 7, prerequisitos: ['s6_m1'], correquisitos: ['s7_m2'] },
+  // Semestre 7
+  { codigo: 's7_m1', nombre: 'Administración Fonoaudiológica', semestre: 7 },
+  { codigo: 's7_m2', nombre: 'Intervención Fonoaudiológica III', semestre: 7, prerequisitos: ['s6_m4'], correquisitos: ['s7_m3', 's7_m7'] },
+  { codigo: 's7_m3', nombre: 'Análisis Acústico de la Voz', semestre: 7, prerequisitos: ['s6_m5'], correquisitos: ['s7_m2'] },
+  { codigo: 's7_m4', nombre: 'Metodología de la Investigación II', semestre: 7, prerequisitos: ['s6_m3'] },
+  { codigo: 's7_m5', nombre: 'Técnicas Didácticas en Fonoaudiología', semestre: 7 },
+  { codigo: 's7_m6', nombre: 'Trastornos del Aprendizaje', semestre: 7, prerequisitos: ['s6_m4'] },
+  { codigo: 's7_m7', nombre: 'Relación Clínica y Terapéutica II', semestre: 7, prerequisitos: ['s6_m1'], correquisitos: ['s7_m2'] },
 
-      // Semestre 8
-      { codigo: 's8_m1', nombre: 'Diagnóstico e Intervención Fonoaudiológica Integral', semestre: 8, prerequisitos: ['s7_m2', 's7_m7'], correquisitos: ['s8_m2'] },
-      { codigo: 's8_m2', nombre: 'Ejecución Terapéutica Fonoaudiológica', semestre: 8, prerequisitos: ['s7_m2', 's7_m7'], correquisitos: ['s8_m1'] },
-      { codigo: 's8_m3', nombre: 'Integración de Proyecto I', semestre: 8, prerequisitos: ['s7_m4'] },
+  // Semestre 8
+  { codigo: 's8_m1', nombre: 'Diagnóstico e Intervención Fonoaudiológica Integral', semestre: 8, prerequisitos: ['s7_m2', 's7_m7'], correquisitos: ['s8_m2'] },
+  { codigo: 's8_m2', nombre: 'Ejecución Terapéutica Fonoaudiológica', semestre: 8, prerequisitos: ['s7_m2', 's7_m7'], correquisitos: ['s8_m1'] },
+  { codigo: 's8_m3', nombre: 'Integración de Proyecto I', semestre: 8, prerequisitos: ['s7_m4'] },
 
-      // Semestre 9
-      { codigo: 's9_m1', nombre: 'Promoción y Prevención Fonoaudiológica', semestre: 9, prerequisitos: ['s8_m1'] },
-      { codigo: 's9_m2', nombre: 'Prácticas en Centros de Salud II', semestre: 9, prerequisitos: ['s8_m2'] },
-      { codigo: 's9_m3', nombre: 'Integración de Proyecto II', semestre: 9, prerequisitos: ['s8_m3'] }
-    ];
+  // Semestre 9
+  { codigo: 's9_m1', nombre: 'Promoción y Prevención Fonoaudiológica', semestre: 9, prerequisitos: ['s8_m1'] },
+  { codigo: 's9_m2', nombre: 'Prácticas en Centros de Salud II', semestre: 9, prerequisitos: ['s8_m2'] },
+  { codigo: 's9_m3', nombre: 'Integración de Proyecto II', semestre: 9, prerequisitos: ['s8_m3'] }
+];
 
     const estado = JSON.parse(localStorage.getItem('estadoMaterias') || '{}');
 
@@ -133,7 +164,7 @@
       const contenedor = document.getElementById('contenedor');
       contenedor.innerHTML = '';
       const maxSemestre = Math.max(...materias.map(m => m.semestre));
-      for (let i = 1; i <= maxSemestre; i++) {
+      for (let i = 0; i <= maxSemestre; i++) {
         const semestre = document.createElement('div');
         semestre.className = 'semestre';
         const titulo = document.createElement('h2');
@@ -149,12 +180,16 @@
           div.textContent = m.nombre;
           div.dataset.codigo = m.codigo;
 
+          const tooltip = document.createElement('div');
+          tooltip.className = 'tooltip';
+          tooltip.innerHTML = generarTooltip(m);
+          div.appendChild(tooltip);
+
           if (estado[m.codigo]) {
             div.classList.add('aprobada');
+            contador++;
           } else if (!puedeTomar(m)) {
             div.classList.add('bloqueada');
-          } else {
-            contador++;
           }
 
           semestre.appendChild(div);
@@ -162,7 +197,7 @@
 
         const contadorDiv = document.createElement('div');
         contadorDiv.className = 'contador';
-        contadorDiv.textContent = `${contador} materia(s) habilitada(s) para tomar.`;
+        contadorDiv.textContent = `${contador} materia(s) aprobada(s).`;
         semestre.appendChild(contadorDiv);
 
         contenedor.appendChild(semestre);
@@ -170,9 +205,17 @@
     }
 
     function puedeTomar(materia) {
-      const prereqOk = !materia.prerequisitos || materia.prerequisitos.every(req => estado[req]);
-      const coreqOk = !materia.correquisitos || materia.correquisitos.every(req => estado[req] || materias.find(m => m.codigo === req)?.semestre === materia.semestre);
-      return prereqOk && coreqOk;
+      const preOk = !materia.prerequisitos || materia.prerequisitos.every(c => estado[c]);
+            const coOk = !materia.correquisitos || materia.correquisitos.every(c => estado[c]);
+            const es9noSemestre = materia.semestre === 9;
+      if (es9noSemestre && !estado['ing_b1']) return false;
+      return preOk && coOk;
+    }
+
+    function generarTooltip(materia) {
+      const prereq = materia.prerequisitos?.length ? `📌 Pre: ${materia.prerequisitos.join(', ')}` : '';
+      const coreq = materia.correquisitos?.length ? `🤝 Co: ${materia.correquisitos.join(', ')}` : '';
+      return [prereq, coreq].filter(Boolean).join('<br>');
     }
 
     function toggleAprobada(div) {
